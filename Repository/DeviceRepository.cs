@@ -45,10 +45,10 @@ namespace bildExamNew.Repository
         public async Task<Device> GetDevice(int id)
         {
             var devices = await _context.Devices
-            .Where(t => t.PropertyValues.Any(e => e.DeviceId == id) && t.Id == id)
+            .Where(t => t.PropertyValues.Any(e => e.DeviceId == id))
             .Include(t => t.PropertyValues).ThenInclude(d => d.DeviceTypeProperty).ThenInclude(d => d.DeviceType)
-            .ToListAsync();
-            return devices[0];
+            .FirstOrDefaultAsync(p => p.Id == id);
+            return devices;
         }
 
 
