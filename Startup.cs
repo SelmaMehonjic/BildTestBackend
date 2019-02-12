@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using bildExamNew.Data;
@@ -39,10 +41,22 @@ namespace bildExamNew
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
-             services.AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-    });
+   services.AddSwaggerGen(c =>
+        {
+            //The generated Swagger JSON file will have these properties.
+            c.SwaggerDoc("v1", new Info
+            {
+                Title = "Swagger XML Api Demo",
+                Version = "v1",
+            });
+            
+            // Set the comments path for the Swagger JSON and UI.
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
+        
+           
+        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +78,7 @@ namespace bildExamNew
 
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api Demo v1");
     });
             app.UseMvc();
         }

@@ -18,7 +18,11 @@ namespace bildExamNew.Repository
         }
         public async Task CreateDeviceType(DeviceTypes deviceType)
         {
+            //Create type
+
             await _context.DeviceTypes.AddAsync(deviceType);
+
+            //Create properties
             foreach (var property in deviceType.TypeProperties)
             {
                 await _context.DeviceTypesProperties.AddAsync(property);
@@ -53,8 +57,10 @@ namespace bildExamNew.Repository
 
         public async Task<DeviceTypes> UpdateDeviceType(DeviceTypes deviceType)
         {
+                //Update type
             if (deviceType.TypeProperties != null)
             {
+                //Update properties
                 foreach (var property in deviceType.TypeProperties)
                 {
                     _context.DeviceTypesProperties.Update(property);

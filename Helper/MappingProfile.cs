@@ -12,10 +12,10 @@ namespace bildExamNew.Mapper
         public MappingProfile() 
         {
             CreateMap<DeviceTypeDTO, DeviceTypes>();
-            CreateMap<DeviceDTO, Device>();
-            CreateMap<DeviceTypePropertyDTO, DeviceTypeProperties>();
-            CreateMap<DevicePropertyValueForViewDTO, DevicePropertyValues>();
-            CreateMap<DevicePropertyValueDTO, DevicePropertyValues>();
+            CreateMap<DeviceForCreatingOrUpdatingDTO, Device>();
+            CreateMap<DeviceTypePropertyForCreatingOrUpdatingDTO, DeviceTypeProperties>();
+            CreateMap<DevicePropertyValueForReturnDTO, DevicePropertyValues>();
+            CreateMap<DevicePropertyValueForCreatingOrUpdatingDTO, DevicePropertyValues>();
 
         }
     }

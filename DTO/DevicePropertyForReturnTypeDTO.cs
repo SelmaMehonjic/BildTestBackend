@@ -1,6 +1,6 @@
 namespace exam.DTO
 {
-    public class DevicePropertyValueForReturnTypeDTO
+    public class DevicePropertyForReturnTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

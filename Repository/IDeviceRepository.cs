@@ -8,7 +8,7 @@ namespace bildExamNew.Repository
     public interface IDeviceRepository
     {
         Task CreateDevice(Device device);
-        Task CreateProperty (DevicePropertyValues property);
+        Task CreatePropertyValue (DevicePropertyValues property);
         Task<Device> UpdateDevice(Device device);
         Task<Device> GetDevice(int id);
         Task DeleteDevice(int id);

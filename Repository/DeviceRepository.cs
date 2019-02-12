@@ -10,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bildExamNew.Repository
 {
+    // Concrete implementacion of IDeviceRepository
     public class DeviceRepository : IDeviceRepository
     {
+        //Communication with database initializing _context field
         private readonly DataContext _context;
 
         public DeviceRepository(DataContext context)
@@ -20,16 +22,19 @@ namespace bildExamNew.Repository
         }
         public async Task CreateDevice(Device device)
         {
+            //Adding new device
             await _context.Devices.AddAsync(device);
             foreach (var value in device.PropertyValues)
             {
+                //Adding property value
                 await _context.DevicePropertyValues.AddAsync(value);
             }
             await _context.SaveChangesAsync();
         }
 
-        public async Task CreateProperty(DevicePropertyValues property)
+        public async Task CreatePropertyValue(DevicePropertyValues property)
         {
+            //Adding property value, need this method for adding property value while updating device information
             await _context.DevicePropertyValues.AddAsync(property);
 
         }
@@ -45,6 +50,7 @@ namespace bildExamNew.Repository
         public async Task<Device> GetDevice(int id)
         {
             var devices = await _context.Devices
+            //Loooking for specific property values then include all necessary data, then choose specific device
             .Where(t => t.PropertyValues.Any(e => e.DeviceId == id))
             .Include(t => t.PropertyValues).ThenInclude(d => d.DeviceTypeProperty).ThenInclude(d => d.DeviceType)
             .FirstOrDefaultAsync(p => p.Id == id);
@@ -76,7 +82,10 @@ namespace bildExamNew.Repository
 
         public async Task<Device> UpdateDevice(Device device)
         {
+            //update device
             _context.Devices.Update(device);
+
+            //Update property values
             foreach (var value in device.PropertyValues)
             {
                 _context.DevicePropertyValues.Update(value);

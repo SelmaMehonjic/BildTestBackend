@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bildExamNew</name>
+    </assembly>
+    <members>
+        <member name="M:bildExamNew.Controllers.DeviceController.CreateOrUpdateDevice(bildExamNew.DTO.DeviceForCreatingOrUpdatingDTO)">
+            <summary>
+             Action for creating or updating device 
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceController.GetDevice(System.Int32)">
+            <summary>
+             Action for getting single device by  ID
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceController.SearcForDevice(exam.Helper.PagingAndFilteringDTO)">
+            <summary>
+             Action for searching device by specific name, type, property value, createdDate or price
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceController.DeleteDevice(System.Int32)">
+            <summary>
+             Action deleting device 
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceTypeController.CreateOrUpdateDeviceType(bildExamNew.DTO.DeviceTypeDTO)">
+            <summary>
+             Action for creating or updating device type 
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceTypeController.GetDeviceType(System.Int32)">
+            <summary>
+             Action for getting single device type by ID
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceTypeController.GetDeviceTypes">
+            <summary>
+             Action for getting all device types
+            </summary>
+        </member>
+        <member name="M:bildExamNew.Controllers.DeviceTypeController.DeleteDevice(System.Int32)">
+            <summary>
+             Action for deleting device type
+            </summary>
+        </member>
+    </members>
+</doc>

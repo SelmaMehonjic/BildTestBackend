@@ -21,19 +21,25 @@ namespace bildExamNew.Controllers
             _repository = repository;
             _mapper = mapper;
         }
+
+        /// <summary>
+        ///  Action for creating or updating device 
+        /// </summary>
+
         [HttpPost]
-        public async Task<IActionResult> CreateOrUpdateDevice([FromBody] DeviceDTO device)
+        public async Task<IActionResult> CreateOrUpdateDevice([FromBody] DeviceForCreatingOrUpdatingDTO device)
         {
             var newDevice = _mapper.Map<Device>(device);
 
             if (device.Id != null)
             {
+                // creating or updating properties values 
                 foreach (var value in device.PropertyValues)
                 {
                     if (value.Id == null)
                     {
                         var newValue = _mapper.Map<DevicePropertyValues>(value);
-                        await _repository.CreateProperty(newValue);
+                        await _repository.CreatePropertyValue(newValue);
                     }
                 }
                 await _repository.UpdateDevice(newDevice);
@@ -45,23 +51,37 @@ namespace bildExamNew.Controllers
             return Ok();
         }
 
+        /// <summary>
+        ///  Action for getting single device by  ID
+        /// </summary>
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDevice(int id)
         {
             var device = await _repository.GetDevice(id);
-            var deviceForReturn = _mapper.Map<DeviceForViewDTO>(device);
+            var deviceForReturn = _mapper.Map<DeviceForReturnSingleDeviceDTO>(device);
 
             return Ok(deviceForReturn);
         }
+
+        /// <summary>
+        ///  Action for searching device by specific name, type, property value, createdDate or price
+        /// </summary>
+
         [HttpGet]
 
         public async Task<IActionResult> SearcForDevice([FromQuery] PagingAndFilteringDTO search)
         {
 
             var searchDevices = await _repository.SearchDevices(search);
-            var deviceForReturn = _mapper.Map<IEnumerable<DeviceForSearchDTO>>(searchDevices);
+            var deviceForReturn = _mapper.Map<IEnumerable<DeviceForReturnSearchResultDTO>>(searchDevices);
             return Ok(deviceForReturn);
         }
+
+        /// <summary>
+        ///  Action deleting device 
+        /// </summary>
+
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteDevice(int id)

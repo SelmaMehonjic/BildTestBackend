@@ -21,6 +21,10 @@ namespace bildExamNew.Controllers
             _repository = repository;
             _mapper = mapper;
         }
+
+        /// <summary>
+        ///  Action for creating or updating device type 
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreateOrUpdateDeviceType([FromBody] DeviceTypeDTO deviceType)
         {
@@ -36,43 +40,62 @@ namespace bildExamNew.Controllers
             }
             return Ok();
         }
+
+        /// <summary>
+        ///  Action for getting single device type by ID
+        /// </summary>
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDeviceType(int id)
         {
             var deviceType = await _repository.GetDeviceType(id);
-            var deviceTypeForReturn = _mapper.Map<DeviceTypeForReturnTypeDTO>(deviceType);
+            var deviceTypeForReturn = _mapper.Map<DeviceTypeForReturnDTO>(deviceType);
             return Ok(deviceTypeForReturn);
         }
+
+        /// <summary>
+        ///  Action for getting all device types
+        /// </summary>
 
         [HttpGet]
 
         public async Task<IActionResult> GetDeviceTypes()
         {
             var deviceTypes = await _repository.GetDeviceTypes();
-            var deviceTypesForView = new List<DeviceTypeForReturnTypeDTO>();
-            foreach (var member in deviceTypes)
+            var deviceTypesForReturn = new List<DeviceTypeForReturnDTO>();
+
+            //getting hierarhical view of type list
+
+            foreach (var type in deviceTypes)
             {
-                if (member.ParentTypeId == null)
+                if (type.ParentTypeId == null)
                 {
-                    var memberForReturn = _mapper.Map<DeviceTypeForReturnTypeDTO>(member);
-                    deviceTypesForView.Add(memberForReturn);
+                    var memberForReturn = _mapper.Map<DeviceTypeForReturnDTO>(type);
+                    deviceTypesForReturn.Add(memberForReturn);
                 }
             }
-            return Ok(deviceTypesForView);
+
+            return Ok(deviceTypesForReturn);
         }
+
+        /// <summary>
+        ///  Action for deleting device type
+        /// </summary>
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDevice(int id)
         {
-            try 
+            //if device with this type exist, you can't delete this type
+            try
             {
                 await _repository.DeleteDeviceType(id);
                 return Ok();
             }
             catch
             {
-                return BadRequest("Cant delete this type");
+                return BadRequest("Can't delete this type");
             }
-            
+
         }
     }
 }
