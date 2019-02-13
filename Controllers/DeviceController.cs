@@ -46,11 +46,11 @@ namespace bildExamNew.Controllers
                         }
                     }
                 }
-                newDevice.CreatedDate = DateTime.Now.Date;
                 await _repository.UpdateDevice(newDevice);
             }
             else
             {
+                newDevice.CreatedDate = DateTime.Now.Date;
                 await _repository.CreateDevice(newDevice);
             }
             return Ok();
