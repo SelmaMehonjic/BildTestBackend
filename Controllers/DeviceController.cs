@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,14 +35,18 @@ namespace bildExamNew.Controllers
             if (device.Id != null)
             {
                 // creating or updating properties values 
-                foreach (var value in device.PropertyValues)
+                if (device.PropertyValues != null)
                 {
-                    if (value.Id == null)
+                    foreach (var value in device.PropertyValues)
                     {
-                        var newValue = _mapper.Map<DevicePropertyValues>(value);
-                        await _repository.CreatePropertyValue(newValue);
+                        if (value.Id == null)
+                        {
+                            var newValue = _mapper.Map<DevicePropertyValues>(value);
+                            await _repository.CreatePropertyValue(newValue);
+                        }
                     }
                 }
+                newDevice.CreatedDate = DateTime.Now.Date;
                 await _repository.UpdateDevice(newDevice);
             }
             else

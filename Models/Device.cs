@@ -13,7 +13,7 @@ namespace bildExamNew.Models
         public DeviceTypes DeviceType { get; set; }
         public int DeviceTypeId { get; set; }
         public ICollection<DevicePropertyValues> PropertyValues {get; set;}
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

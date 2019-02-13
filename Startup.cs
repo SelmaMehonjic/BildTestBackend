@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using bildExamNew.Data;
 using bildExamNew.Repository;
+using BildTestBackend.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,30 +34,32 @@ namespace bildExamNew
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddJsonOptions( opt => {
-            opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            .AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddCors();
             services.AddAutoMapper();
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
-   services.AddSwaggerGen(c =>
-        {
+            services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
+            services.AddSwaggerGen(c =>
+                 {
             //The generated Swagger JSON file will have these properties.
             c.SwaggerDoc("v1", new Info
-            {
-                Title = "Swagger XML Api Demo",
-                Version = "v1",
-            });
-            
+                     {
+                         Title = "Swagger XML Api Demo",
+                         Version = "v1",
+                     });
+
             // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        c.IncludeXmlComments(xmlPath);
-        
-           
-        });
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                     c.IncludeXmlComments(xmlPath);
+
+
+                 });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,12 +77,12 @@ namespace bildExamNew
 
             // app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-             app.UseSwagger();
+            app.UseSwagger();
 
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api Demo v1");
-    });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api Demo v1");
+            });
             app.UseMvc();
         }
     }

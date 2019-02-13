@@ -11,15 +11,15 @@ namespace exam.Helper
         public int DeviceNumberPerPage { get; set; }
 
         public string PropertyValue { get; set; }
-        public int? GreatherThan { get; set; }
-        public int? GreatherThanOrEqual { get; set; }
-        public int? LessThan { get; set; }
-        public int? LessThanOrEqual { get; set; }
+        public decimal? GreatherThan { get; set; }
+        public decimal? GreatherThanOrEqual { get; set; }
+        public decimal? LessThan { get; set; }
+        public decimal? LessThanOrEqual { get; set; }
 
-       public DateTime AfterDate { get; set; }
-        public DateTime AfterOrEqualDate { get; set; }
-        public DateTime BeforeDate { get; set; }
-        public DateTime BeforeOrEqualDate { get; set; }
+        public DateTime? AfterDate { get; set; }
+        public DateTime? AfterOrEqualDate { get; set; }
+        public DateTime? BeforeDate { get; set; }
+        public DateTime? BeforeOrEqualDate { get; set; }
 
     }
 }
