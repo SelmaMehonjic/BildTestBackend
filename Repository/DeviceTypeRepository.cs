@@ -32,6 +32,11 @@ namespace bildExamNew.Repository
             await _repository.SaveChanges();
         }
 
+        public async Task CreateProperty(DeviceTypeProperties property) {
+
+                await _context.DeviceTypesProperties.AddAsync(property);
+            await _repository.SaveChanges();
+        }
         public async Task DeleteDeviceType(int id)
         {
 
@@ -47,6 +52,21 @@ namespace bildExamNew.Repository
             var deviceTypes = await GetDeviceTypes();
             var deviceType = deviceTypes.FirstOrDefault(t => t.Id == id);
             return deviceType;
+        }
+
+        public  IEnumerable<DeviceTypeProperties> Recursion(DeviceTypes type) {
+            if(type.ParentType == null)
+                return type.TypeProperties;
+            return Recursion(type.ParentType).Concat(type.TypeProperties);
+        }
+        public async Task<IEnumerable<DeviceTypeProperties>> GetDeviceTypeProperties(int id)
+        {
+            var deviceTypes = await _context.DeviceTypes.Include(p => p.TypeProperties)
+            .Include(p => p.ParentType)
+            .ToListAsync();
+           var deviceType =  deviceTypes.FirstOrDefault(x => x.Id == id);
+            return Recursion(deviceType);
+
         }
 
         public async Task<IEnumerable<DeviceTypes>> GetDeviceTypes()

@@ -38,7 +38,7 @@ namespace bildExamNew.Controllers
             {
                 await _repository.CreateDeviceType(newDeviceType);
             }
-            return Ok();
+            return Ok(newDeviceType);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace bildExamNew.Controllers
                 }
             }
 
-            return Ok(deviceTypesForReturn);
+            return Ok(deviceTypes);
         }
 
         /// <summary>
@@ -96,6 +96,12 @@ namespace bildExamNew.Controllers
                 return BadRequest("Can't delete this type");
             }
 
+        }
+        [HttpGet("properties/{devicetypeId}")]
+        public async Task<IActionResult> GetProperties(int devicetypeId) {
+           var properties =  await _repository.GetDeviceTypeProperties(devicetypeId);
+           var propertiesForReturn = _mapper.Map<IEnumerable<DevicePropertyForReturnTypeDTO>>(properties);
+            return Ok(propertiesForReturn);
         }
     }
 }

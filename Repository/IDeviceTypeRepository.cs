@@ -11,5 +11,8 @@ namespace bildExamNew.Repository
         Task<IEnumerable<DeviceTypes>> GetDeviceTypes();
         Task<DeviceTypes> GetDeviceType(int id);
         Task DeleteDeviceType(int id);
+        Task<IEnumerable<DeviceTypeProperties>> GetDeviceTypeProperties(int id);
+        Task CreateProperty(DeviceTypeProperties property);
+
     }
 }

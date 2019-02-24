@@ -5,6 +5,7 @@ using AutoMapper;
 using bildExamNew.DTO;
 using bildExamNew.Models;
 using bildExamNew.Repository;
+using BildTestBackend.DTO;
 using exam.DTO;
 using exam.Helper;
 using Microsoft.AspNetCore.Mvc;
@@ -34,26 +35,16 @@ namespace bildExamNew.Controllers
 
             if (device.Id != null)
             {
-                // creating or updating properties values 
-                if (device.PropertyValues != null)
-                {
-                    foreach (var value in device.PropertyValues)
-                    {
-                        if (value.Id == null)
-                        {
-                            var newValue = _mapper.Map<DevicePropertyValues>(value);
-                            await _repository.CreatePropertyValue(newValue);
-                        }
-                    }
-                }
+                     newDevice.CreatedDate = DateTime.Now.Date;
                 await _repository.UpdateDevice(newDevice);
             }
             else
             {
                 newDevice.CreatedDate = DateTime.Now.Date;
-                await _repository.CreateDevice(newDevice);
+              await _repository.CreateDevice(newDevice);
+
             }
-            return Ok();
+            return Ok(newDevice);
         }
 
         /// <summary>
@@ -79,7 +70,7 @@ namespace bildExamNew.Controllers
         {
 
             var searchDevices = await _repository.SearchDevices(search);
-            var deviceForReturn = _mapper.Map<IEnumerable<DeviceForReturnSearchResultDTO>>(searchDevices);
+            var deviceForReturn = _mapper.Map<IEnumerable<DeviceForReturnSingleDeviceDTO>>(searchDevices);
             return Ok(deviceForReturn);
         }
 
@@ -93,6 +84,24 @@ namespace bildExamNew.Controllers
         {
             await _repository.DeleteDevice(id);
             return Ok();
+        }
+        [HttpGet("list")]
+
+        public async Task<IActionResult> GetDevices()
+        {
+            var devices = await _repository.GetDevices();
+            var list = _mapper.Map<IEnumerable<DeviceForReturnSingleDeviceDTO>>(devices);
+
+            return Ok(list);
+        }
+        [HttpGet("values/{id}")]
+
+        public async Task<IActionResult> GetDevices(int id)
+        {
+            var device = await _repository.GetDeviceProperties(id);
+            var deviceForReturn = _mapper.Map<DeviceForReturnPropertiesDTO>(device);
+
+            return Ok(deviceForReturn);
         }
     }
 }

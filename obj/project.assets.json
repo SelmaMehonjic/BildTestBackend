@@ -12271,11 +12271,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tijana Tomic\\Desktop\\sagita\\BildTestBackend\\bildExamNew.csproj",
+      "projectUniqueName": "C:\\Users\\Tijana Tomic\\Desktop\\provjera\\BildTestBackend\\bildExamNew.csproj",
       "projectName": "bildExamNew",
-      "projectPath": "C:\\Users\\Tijana Tomic\\Desktop\\sagita\\BildTestBackend\\bildExamNew.csproj",
+      "projectPath": "C:\\Users\\Tijana Tomic\\Desktop\\provjera\\BildTestBackend\\bildExamNew.csproj",
       "packagesPath": "C:\\Users\\Tijana Tomic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tijana Tomic\\Desktop\\sagita\\BildTestBackend\\obj\\",
+      "outputPath": "C:\\Users\\Tijana Tomic\\Desktop\\provjera\\BildTestBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -11,6 +11,8 @@ namespace exam.DTO
         }
         public int Id { get; set; }
         public string Name { get; set; }
+        public int? ParentTypeId {get; set;}
+        public string ParentTypeName { get; set; }
         public virtual DeviceTypeForReturnDTO ParentType { get; set; }
         public ICollection<DevicePropertyForReturnTypeDTO> TypeProperties { get; set; }
         public virtual ICollection<DeviceTypeForReturnDTO> ChildrenType { get; set; }

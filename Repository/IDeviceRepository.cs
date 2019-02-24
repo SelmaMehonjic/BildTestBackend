@@ -12,8 +12,11 @@ namespace bildExamNew.Repository
         Task<Device> UpdateDevice(Device device);
         Task<Device> GetDevice(int id);
         Task DeleteDevice(int id);
-
         Task<IEnumerable<Device>> SearchDevices(PagingAndFilteringDTO search);
+        Task<IEnumerable<Device>> GetDevices();
+        Task<Device> GetDeviceProperties(int id);
+Task<DevicePropertyValues> UpdatePropertyValue(DevicePropertyValues value);
+
 
 
     }

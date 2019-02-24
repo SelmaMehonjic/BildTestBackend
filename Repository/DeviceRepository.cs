@@ -58,6 +58,19 @@ namespace bildExamNew.Repository
             return devices;
         }
 
+        public async Task<Device> GetDeviceProperties(int id)
+        {
+            var device = await _context.Devices.Include(d => d.PropertyValues).ThenInclude(d => d.DeviceTypeProperty)
+            .FirstOrDefaultAsync(d => d.Id == id);
+            return device;
+        }
+
+        public async Task<IEnumerable<Device>> GetDevices()
+        {
+              var devices = await _context.Devices
+            .Include(d => d.DeviceType).ToListAsync();
+            return devices;
+        }
 
         public async Task<IEnumerable<Device>> SearchDevices(PagingAndFilteringDTO search)
         {
@@ -73,7 +86,7 @@ namespace bildExamNew.Repository
             (search.BeforeDate == null || p.CreatedDate < search.BeforeDate) &&
             (search.BeforeOrEqualDate == null || p.CreatedDate <= search.BeforeOrEqualDate))
             .Include(p => p.PropertyValues)
-            .ThenInclude(p => p.DeviceTypeProperty)
+            .ThenInclude(p => p.DeviceTypeProperty).Include(p => p.DeviceType)
             .Skip((search.PageNumber - 1) * search.DeviceNumberPerPage)
             .Take(search.DeviceNumberPerPage)
             .ToListAsync();
@@ -87,10 +100,19 @@ namespace bildExamNew.Repository
             _context.Devices.Update(device);
 
             //Update property values
-            _context.DevicePropertyValues.UpdateRange(device.PropertyValues);
+            // _context.DevicePropertyValues.UpdateRange(device.PropertyValues);
             await _repository.SaveChanges();
             return device;
         }
+    public async Task<DevicePropertyValues> UpdatePropertyValue(DevicePropertyValues value)
+        {
+            //update device
+            _context.DevicePropertyValues.Update(value);
 
+            //Update property values
+            // _context.DevicePropertyValues.UpdateRange(device.PropertyValues);
+            await _repository.SaveChanges();
+            return value;
+        }
     }
 }
